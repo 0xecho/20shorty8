@@ -235,6 +235,9 @@
         <h2>
             Your goal is simple: Craft a move sequence (UDLR), watch the game play out, and see how high you can score! (Bonus points for shorter sequences)
         </h2>
+        <br/>
+        <br/>
+        <input type="text" id="nickname" placeholder="My name is ...." />
         <select id="theme-selector">
             <option value="">Classic</option>
             <option value="theme-dark">Dark</option>
@@ -280,16 +283,16 @@
         let arrowOverlay;
         let simulationInterval;
 
-        const API_URL = 'http://34.66.165.83/';
+        const API_URL = 'https://20longy8.eliasthe.dev/';
 
-        async function submitScore(moves) {
+        async function submitScore(nickname, moves) {
             try {
                 const response = await fetch(`${API_URL}/submit`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ moves }),
+                    body: JSON.stringify({ moves, nickname }),
                 });
                 const data = await response.json();
                 console.log('Move submitted:', data);
@@ -435,7 +438,7 @@
         function endSimulation() {
             if (isGameOver()) {
                 document.getElementById('game-status').textContent = "Game over! You can go through the moves using the controls below. Scored " + score;
-                submitScore(document.getElementById('moves').value, score);
+                submitScore(document.getElementById('nickname').value, document.getElementById('moves').value);
                 fetchLeaderboards();
             } else {
                 document.getElementById('game-status').textContent = "Game ended: No valid moves left";
@@ -563,28 +566,6 @@
         }
 
         createBoard();
-
-        const dummyLeaderboardData = {
-            topPerformers: [
-                { nickname: 'Alice', score: 20480, moves: 'UDLRLUDLR' },
-                { nickname: 'Bob', score: 16384, moves: 'RLDURLDU' },
-                { nickname: 'Charlie', score: 8192, moves: 'UDLRUDLR' },
-            ],
-            topEfficiency: [
-                { nickname: 'David', score: 4096, moves: 'UDLR' },
-                { nickname: 'Eva', score: 2048, moves: 'RLDU' },
-                { nickname: 'Frank', score: 1024, moves: 'UDRL' },
-            ],
-        };
-
-        async function fetchLeaderboards() {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    updateLeaderboards(dummyLeaderboardData);
-                    resolve();
-                }, 500);
-            });
-        }
 
         fetchLeaderboards();
 
