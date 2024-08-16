@@ -283,7 +283,7 @@
         let arrowOverlay;
         let simulationInterval;
 
-        const API_URL = 'https://20longy8.eliasthe.dev/';
+        const API_URL = 'https://20longy8.eliasthe.dev';
 
         async function submitScore(nickname, moves) {
             try {
@@ -315,7 +315,7 @@
 
         async function fetchLeaderboards() {
             try {
-                const response = await fetch(`${API_URL}/leaderboards`);
+                const response = await fetch(`${API_URL}/leaderboard`);
                 const data = await response.json();
                 if (response.ok) {
                     data.topPerformers = data.topPerformers || [];
