@@ -318,7 +318,7 @@
                 const response = await fetch(`${API_URL}/leaderboard`);
                 const data = await response.json();
                 if (response.ok) {
-                    data.topPerformers = data.topPerformers || [];
+                    data.topScores = data.topScores || [];
                     data.topEfficiency = data.topEfficiency || [];
 
                     updateLeaderboards(data);
@@ -333,7 +333,7 @@
             const topPerformers = document.getElementById('top-performers');
             const topEfficiency = document.getElementById('top-efficiency');
 
-            topPerformers.innerHTML = data.topPerformers?.map((entry, index) =>
+            topPerformers.innerHTML = data.topScores?.map((entry, index) =>
                 `<li>${entry.nickname}: ${entry.score} (Moves: ${entry.moves})</li>`
             ).join('');
 
@@ -567,7 +567,7 @@
 
         createBoard();
 
-        fetchLeaderboards();
+        const leaderboardsFetchIntervalId = setInterval(fetchLeaderboards, 1000 * 15);            
 
         function getTileColor(value) {
             return `var(--tile-color-${value})`;
