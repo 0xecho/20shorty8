@@ -567,6 +567,7 @@
 
         createBoard();
 
+        fetchLeaderboards();
         const leaderboardsFetchIntervalId = setInterval(fetchLeaderboards, 1000 * 15);            
 
         function getTileColor(value) {
